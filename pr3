@@ -1,0 +1,37 @@
+import sympy as sp
+
+def bisection_method(): try: expr_input = input("Введіть функцію (наприклад, x**3 - x - 3): ") x = sp.symbols('x') expr = sp.sympify(expr_input) f = sp.lambdify(x, expr) except: print("Помилка: введено некоректний математичний вираз.") return
+
+try:
+    a = float(input("Введіть початок відрізка a: "))
+    b = float(input("Введіть кінець відрізка b: "))
+    tol = float(input("Введіть точність (наприклад, 0.001): "))
+except ValueError:
+    print("Помилка: межі та точність мають бути числами.")
+    return
+
+fa, fb = f(a), f(b)
+
+if fa * fb >= 0:
+    print("Помилка: функція не змінює знак на цьому відрізку.")
+    return
+
+step = 0
+while (b - a) / 2 > tol:
+    step += 1
+    c = (a + b) / 2
+    fc = f(c)
+    
+    print(f"Крок {step}. Відрізок: {a:.4f} - {b:.4f}. Значення: {c:.4f}")
+
+    if fc == 0:
+        break
+    
+    if f(a) * fc < 0:
+        b = c
+    else:
+        a = c
+
+root = (a + b) / 2
+print(f"\nНаближений корінь: {root:.6f}")
+if name == "main": bisection_method()
